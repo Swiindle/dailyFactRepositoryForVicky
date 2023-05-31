@@ -5,9 +5,11 @@ I thought that you might appreciate this half-joke half-thoughtful repository.
 
 The catch? Well you're going to need a C compiler :)
 
-And also C is quite a low level language... so please _read the code_ to make sure I'm not hacking you!
+And also C is quite a low level language... please *read the code* to make sure I'm not hacking you!
 
 # Installation / Compilation
 ```
- $ gcc filename.c –o filename
+ $ gcc filename.c –o dailyfactrepository
+
+ ./dailyfactrepository
 ```
