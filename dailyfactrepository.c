@@ -10,11 +10,36 @@ struct fact {
 };
 
 /**
+* This function will encrypt a string, probably won't be used in live version
+*/
+void encryptString(char *str)
+{
+    for(int i = 0; str[i] != '\0' ; i++)
+    {
+        if(str[i] > 36)
+            str[i] = str[i] - 3;
+    }
+}
+
+/**
+* This function will decrypt a string
+*/
+void decryptString(char *str)
+{
+    for(int i = 0; str[i] != '\0' ; i++)
+    {
+        if(str[i] > 36)
+            str[i] = str[i] + 3;
+    }
+}
+
+/**
 * This function will print a fact into a nice, readable format
 */
 void printFact(char *str, int arrSize)
 {
     int i = 0, j = 0, textLength = 110;
+    //decryptString(str);
     //system("clear"); // todo: change to "cls" for windows
     while(i < textLength)
     {
@@ -52,6 +77,7 @@ void linkedlistAdd(struct fact* head, char *str)
     struct fact *curr = head;
     struct fact *new = (struct fact*) malloc(sizeof(struct fact));
     int strSize = strlen(str);
+    encryptString(str);
     new->size = strSize;
     new->factData = str;
     new->next = NULL;
@@ -90,52 +116,23 @@ void printlinkedList(struct fact* head)
     printFact(curr->factData,curr->size);
 }
 
-/**
-* This function will encrypt a string, probably won't be used in live version
-*/
-char * encryptString(char str[], int arrSize)
-{
-    char a;
-    for(int i = 0 ; i < arrSize ; i++)
-    {
-        char a = str[i];
-        if(a < 36)
-            str[i] = a;
-        else
-            str[i] = str[i] - 3;
-    }
-    return str;
-}
-
-/**
-* This function will decrypt a string
-*/
-char * decryptString(char str[], int arrSize)
-{
-    char a;
-    for(int i = 0 ; i < arrSize ; i++)
-    {
-        char a = str[i];
-        if(a < 36)
-            str[i] = a;
-        else
-            str[i] = str[i] + 3;
-    }
-    return str;
-}
-
 int main()
 {
-    char *a = "Even if the variable is uninitialized, there should be no way printf reaches a point where it could print a minus sign when the format specifier was";
+    // HEAD INITIALIZATION
+    char a[] = "Even if the variable is uninitialized, there should be no way printf reaches a point where it could print a minus sign when the format specifier was";
     struct fact head = {.size = strlen(a), .factData = a, .next = NULL};
     struct fact *head_ptr = &head;
-    char *b = "Test 123 hello world!";
-    char *c = "My name is mark!";
-    char *d = "wow what an interesting fact!";
-   
+    encryptString(a);
+
+    // LIST OF FACTS INITIALIZATION
+    char b[] = "Test 123 hello world!";
+    char c[] = "My name is mark!";
+    char d[] = "wow what an interesting fact!";
     linkedlistAdd(head_ptr,b);
     linkedlistAdd(head_ptr,c);
     linkedlistAdd(head_ptr,d);
+
+    //MAIN LOGIC
     printlinkedList(head_ptr);
     printf("Linkedlist count: %d\n",linkedlistCount(head_ptr));
     return 0;
