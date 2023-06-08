@@ -4,6 +4,7 @@
 
 // LinkedList data structure
 struct fact {
+    int id;
     int size;
     char *factData;
     struct fact *next;
@@ -36,11 +37,10 @@ void decryptString(char *str)
 /**
 * This function will print a fact into a nice, readable format
 */
-void printFact(char *str, int arrSize)
+void printFact(struct fact* fact)
 {
     int i = 0, j = 0, textLength = 110;
     //decryptString(str);
-    //system("clear"); // todo: change to "cls" for windows
     while(i < textLength)
     {
         printf("#");
@@ -48,10 +48,12 @@ void printFact(char *str, int arrSize)
     }
     i = 0;
     printf("\n\n\n");
-    while (i < arrSize)
+    if(fact->id > 0)
+        printf("Daily Fact No: %d\n", fact->id);
+    while (i < fact->size)
     {
-        printf("%c",str[i]);
-        if(j > textLength && str[i] == ' ')
+        printf("%c",fact->factData[i]);
+        if(j > textLength && fact->factData[i] == ' ')
         {
             printf("\n");
             j = 0;
@@ -70,6 +72,21 @@ void printFact(char *str, int arrSize)
 }
 
 /**
+ * This function counts the number of items within the LinkedList
+*/
+int linkedlistCount(struct fact* head)
+{
+    int i = 0;
+    struct fact *curr = head;
+    while(curr != NULL)
+    {
+        curr = curr->next;
+        i++;
+    }
+    return i;
+}
+
+/**
 * This function will add a new fact to the LinkedList
 */
 void linkedlistAdd(struct fact* head, char *str)
@@ -77,7 +94,8 @@ void linkedlistAdd(struct fact* head, char *str)
     struct fact *curr = head;
     struct fact *new = (struct fact*) malloc(sizeof(struct fact));
     int strSize = strlen(str);
-    encryptString(str);
+    //encryptString(str);
+    new->id = linkedlistCount(head);
     new->size = strSize;
     new->factData = str;
     new->next = NULL;
@@ -86,43 +104,31 @@ void linkedlistAdd(struct fact* head, char *str)
     curr->next = new;
 }
 
-/**
- * This function counts the number of items within the LinkedList
-*/
-int linkedlistCount(struct fact* head)
-{
-    int i = 0;
-    struct fact *curr = head;
-    while(curr->next != NULL)
-    {
-        curr = curr->next;
-        i++;
-    }
-    i++;
-    return i;
-}
-
 /*
 * Prints the content of an entire Linkedlist
 */
 void printlinkedList(struct fact* head)
 {
     struct fact *curr = head;
-    while(curr->next != NULL)
+    char input[50];
+    
+    while (curr != NULL)
     {
-        printFact(curr->factData,curr->size);
+        printFact(curr);
         curr = curr->next;
+        printf("> ");
+        fgets(input, sizeof(input), stdin);
+        system("clear"); // to-do cls for windows
     }
-    printFact(curr->factData,curr->size);
 }
 
 int main()
 {
     // HEAD INITIALIZATION
-    char a[] = "Even if the variable is uninitialized, there should be no way printf reaches a point where it could print a minus sign when the format specifier was";
-    struct fact head = {.size = strlen(a), .factData = a, .next = NULL};
+    char a[] = "Daily Fact Repository 2020 - 2023\nBuilt by Mark, just for Vicky!\nInput anything to go to next fact.";
+    struct fact head = {.id = 0, .size = strlen(a), .factData = a, .next = NULL};
     struct fact *head_ptr = &head;
-    encryptString(a);
+    //encryptString(a);
 
     // LIST OF FACTS INITIALIZATION
     char b[] = "Test 123 hello world!";
@@ -134,6 +140,5 @@ int main()
 
     //MAIN LOGIC
     printlinkedList(head_ptr);
-    printf("Linkedlist count: %d\n",linkedlistCount(head_ptr));
     return 0;
 }

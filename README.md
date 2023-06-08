@@ -3,7 +3,7 @@ Wow you're so old now!
 
 This year, I wanted to make your birthday a little extra special, so in this C program, I have collected _almost every_ Daily fact I have _ever_ sent to you!
 
-I thought that you might appreciate it since it seems you like daily facts so much.
+I thought that you might appreciate it, since you like daily facts so much.
 
 I do want to note that this program _doesn't_ generate new daily facts. You're going to need to keep talking to me for those!
 
