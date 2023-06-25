@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-// LinkedList data structure
+// Fact data structure
 struct fact {
     int id;
     int size;
@@ -11,7 +11,10 @@ struct fact {
 };
 
 /**
-* This function will encrypt a string, probably won't be used in live version
+* This function will encrypt a string, probably won't be used in final version
+* This function shifts ASCII value backwards 3, taking into account the last ASCII value.
+* Technically can be used as a decryption function, if the enryption function is used first.
+* @input *str - pointer to string to be encrypted 
 */
 void encryptString(char *str)
 {
@@ -24,6 +27,9 @@ void encryptString(char *str)
 
 /**
 * This function will decrypt a string
+* This function moves the ASCII value forward 3, taking into account the last ASCII value.
+* Technically can be used as a decryption function, if the enryption function is used first.
+* @input *str - pointer to string to be decrypted.
 */
 void decryptString(char *str)
 {
@@ -35,11 +41,13 @@ void decryptString(char *str)
 }
 
 /**
-* This function will print a fact into a nice, readable format
+* This function takes a fact structure and prints it out into a readable format.
+* @input fact* fact: pointer to the fact structure that you want to print
 */
 void printFact(struct fact* fact)
 {
     int i = 0, j = 0, textLength = 110;
+    // PART ONE: THE ROOF OF THE CONSOLE
     while(i < textLength)
     {
         printf("#");
@@ -52,7 +60,8 @@ void printFact(struct fact* fact)
     while (i < fact->size)
     {
         printf("%c",fact->factData[i]);
-        // Formatting BUG HERE !!!
+        if(fact->factData[i] == '\n')
+            j = 0;
         if(j > textLength && fact->factData[i] == ' ')
         {
             printf("\n");
@@ -62,6 +71,7 @@ void printFact(struct fact* fact)
         j++;
     }
     printf("\n\n\n");
+    // PART THREE: THE FLOOR OF THE CONSOLE
     i = 0;
     while(i < textLength)
     {
@@ -72,7 +82,9 @@ void printFact(struct fact* fact)
 }
 
 /**
- * This function counts the number of items within the LinkedList
+* This function counts the number of items within the LinkedList. Useful function for general logic.
+* @input - fact* head: the head item of the LinkedList.
+* Note: the head needs to be defined by the programmer somewhere.
 */
 int linkedlistCount(struct fact* head)
 {
@@ -87,7 +99,10 @@ int linkedlistCount(struct fact* head)
 }
 
 /**
-* This function will add a new fact to the LinkedList
+* The function adds an item to the LinkedList.
+* @input - fact* head: the head item of the LinkedList.
+* @input - *str: the String containing the fact.
+* Note: the head needs to be defined by the programmer somewhere.
 */
 void linkedlistAdd(struct fact* head, char *str)
 {
@@ -99,13 +114,15 @@ void linkedlistAdd(struct fact* head, char *str)
     new->size = strSize;
     new->factData = str;
     new->next = NULL;
+
     while(curr->next != NULL)
         curr = curr->next;
     curr->next = new;
 }
 
-/*
-* Prints the content of an entire Linkedlist
+/**
+* The function acts as the User Interface of the program. Allows the user to cycle through the different facts.
+* @input - fact* head: the head item of the LinkedList.
 */
 void printlinkedList(struct fact* head)
 {
@@ -133,7 +150,7 @@ int main()
     // LIST OF FACTS INITIALIZATION
     char fact1[] = "Fk /-.-) ?bidf^k obpb^o`ebop peltba qe^q Efqibo jfdeq e^sb e^a Gbtfpe ^ka >cof`^k ^k`bpqlop+";
     char fact2[] = "Qeb mof`b lc ob^i T^p^_f `lpqp ^ijlpq 1-- alii^op mbo HD+ T^p^_f fp ob^iiv afccf`riq ql dolt) ebk`b qeb lkbp tb kloj^iiv b^q fk prpef obpq^ro^kqp ^ob ^ jfu lc elopbo^afpe ^ka `efkbpb jrpq^oa!";
-    char fact3[] = "G O+ O+ Qlihbfk) tofqbo lc qeb Iloa lc qeb Ofkdp) fksbkqba jriqfmib i^kdr^dbp ql prmmloq qeb tloia _rfiafkd lc Jfaaib*b^oqe+";
+    char fact3[] = "G O+ O+ Qlihbfk) tofqbo lc qeb Iloa lc qeb Ofkdp) fksbkqba jriqfmib i^kdr^dbp ql prmmloq qeb tloia _rfiafkd lc\nJfaaib*b^oqe+";
     char fact4[] = "M^sils^ fp k^jba ^cqbo >kk^ M^sils^ qeb ?^iibofk^ cliiltfkd ebo qlro fk >rpqo^if^ # Kbt Wb^i^ka+";
     char fact5[] = "Qeb .6.3 Wlkfkd Obplirqflk af`q^qbp qe^q qeb q^iibo qeb _rfiafkd fk Kbt Vloh) qeb pj^iibo b^`e pr_pbnrbkq cillo tfii _b+ Qeb obplirqflk) ^iqelrde mo^`qf`^i) fp ^ ob^plk tev j^kv _rfiafkdp ^olrka qeb tloia illh qeb t^v qebv al!";
     char fact6[] = "Ilkd*cfkkba bbip `^k pljbqfjbp _b clrka ptfjjfkd fk qeb mlkap lc Pvakbv$p Olv^i ?lq^kf` D^oabk+ Qebpb bbip ^ob lkiv qbjmlo^ofiv ifsfkd fk Pvakbv) qebv tfii jfdo^qb _^`h eljb ql _obba ^ka afb ^cqbo {1- vb^op+";
@@ -144,6 +161,7 @@ int main()
     char fact11[] = "Glek slk Kbrj^kk) jlpq c^jlrp clo efp ^o`efqb`qrob fk `ljmrqbo p`fbk`b) fp ^ipl hkltk clo efp tloh lk qeb J^ke^qq^k Molgb`q";
     char fact12[] = "Jb^profkd lo l_pbosfkd nr^kqrj m^oqf`ibp tfii `e^kdb qebfo _be^sflro ao^pqf`^iiv+ Qefp mebkljbk^ fp hkltk ^p qeb L_pbosbo Bccb`q+";
     char fact13[] = "Qeb cobk`e tloa Ci^kbro abp`of_bp ^ ^k ^j_fs^ibkq mboplk lc ro_^k ^ccirbk`b) obmobpbkqfkd qeb ^_fifqv ql t^kabo abq^`eba colj pl`fbqv tfqe kl lqebo mromlpb qe^k ql _b ^k ^`rqb l_pbosbo lc fkarpqof^ifwba) `lkqbjmlo^ov ifcb+";
+    //char lastFact[] = "Ql Sf`hv7\n\nFc vlr’ob ob^afkd qefp) vlr e^sb “plisba” JV pb`obq jbpp^db! @lkdo^qri^qflkp! F elmb qe^q vlr ifhba qeb c^`qp+\n\nF grpq t^kqba ql ibq vlr hklt qe^q vlr ^ob lkb lc qeb jlpq tlkabocri mblmib F’sb jbq! >ka ^ipl dlq ql jbbq! F m^oqf`ri^oiv ilsb qe^q vlr ifhb a^fiv c^`qp) mf`qrobp lc qeb phv ^ka `lafkd IfkhbaIfpqp rkabo G^`^o^ka^ qobbp %telpb ib^sbp c^ii ^ka qrok _oltk ^ka bka rm illhfkd afpdrpqfkd&+ Qe^kh vlr clo _bfkd ^ dbkrfkb mboplk+ Hbbm _bfkd vlropbic!\n\nF elmb qe^q qefp vb^o) vlr tfii bumbofbk`b jlob FD*pqlov*tloqev bumbofbk`bp ifhb dob^q clla) `lk`boqp) crk cofbkap) qofmp) c^iifkd ^pibbm lk `^ii<<<<<< ^ka j^kv j^kv j^kv jlob a^fiv c^`qp+\n\nTb jfdeq q^ih ibpp klt qe^q tb dbq _rpfbo tfqe FOI pqrcc mirp @LSFA fp dlfkd ^t^v+ ?rq alk’q tloov) objbj_bo qe^q “F tfii ^it^vp `^ob ^_lrq vlr ^ka ^it^vp tfii” * qe^q’p m^oq lc lro ab^i!\n\nE^mmv ?foqea^v ^ka qe^kh vlr clo qeb qeobb vb^op)\n\nJ^oh!!";
 
     linkedlistAdd(head_ptr,fact1);
     linkedlistAdd(head_ptr,fact2);
@@ -158,6 +176,7 @@ int main()
     linkedlistAdd(head_ptr,fact11);
     linkedlistAdd(head_ptr,fact12);
     linkedlistAdd(head_ptr,fact13);
+    //linkedlistAdd(head_ptr,lastFact);
 
     //MAIN LOGIC
     printlinkedList(head_ptr);
